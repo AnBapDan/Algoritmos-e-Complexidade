@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<math.h>
+#include"elapsed_time.h"
 static unsigned int iter=0;
 static unsigned int a = 0;
 static unsigned int b = 1;
@@ -45,15 +46,20 @@ int main(void){
 
 
   for(int i = 0; i<=n; i++){
+    elapsed_time();
     int x = Pr(i);
-    printf("P(%d) = %d ;\t  ",i, x);
+    double h= elapsed_time();
+    printf("P(%d) = %d ;\t Time= %f\n",i, x, h);
   }
   printf("\n");
 
 
   for(int i = 0; i<= n; i++){
+    elapsed_time();
     int y= Pi(i);
-    printf("P(%d) = %d ;\t",i, y);
+    double h= elapsed_time();
+    printf("P(%d) = %d ;\t Time= %f\n",i, y, h);
+
   }
   printf("\n");
 
