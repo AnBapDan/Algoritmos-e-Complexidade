@@ -15,7 +15,7 @@ int t1(int n){
 
 int t2(int n){
   r++;
-  if( n==0 || n==1 || n==2){
+  if( n<=2){
     return n;
   }
   else{
@@ -26,11 +26,11 @@ int t2(int n){
 
 int t3(int n){
   r++;
-  if( n==0 || n==1 || n==2){
+  if( n<=2){
     return n;
   }
   else if((n%3)==0){
-    return 2*t3(n/3);
+    return 2*t3(n/3)+n;
   }
   else{
     return t3(n/3)+t3((n+2)/3)+n;
