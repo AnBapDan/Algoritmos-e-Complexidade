@@ -4,18 +4,19 @@
 unsigned static int r = 0;
 
 int motzkin(int n){
-  unsigned int tmp = 0;
-  assert (n>=0);
-  if(n<=1){
-    return 1;
-  }
-  else{
-    for(int k = 0; k<= (n-2); k++){
+  int array[n+1];
+  array[0]=1;
+  array[1]=1;
+
+  for(int i = 2; i <= n; i++){
+    int tmp = 0;
+    for(int k = 0; k <= i-2; k++){
       r++;
-      tmp += motzkin(k)*motzkin(n-2-k);
+      tmp += array[k]*array[i-2-k];
     }
-    return (motzkin(n-1)+tmp);
+    array[i] = array[i-1] + tmp;
   }
+  return array[n];
 }
 
 int main(void){
