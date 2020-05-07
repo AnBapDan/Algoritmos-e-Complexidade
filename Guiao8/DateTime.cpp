@@ -28,7 +28,6 @@ DateTime* DateTimeCreate(int yy, int mm, int dd, int h, int m, int s) {
   if (d == NULL) return d;
   d->date = *DateCreate(yy,mm,dd);
   d->time = TimeCreate(h,m,s);
-  assert(invariant(&d->date) && invariant(d -> time));   // check invariant
   return d;
 
 }
