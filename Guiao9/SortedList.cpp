@@ -1,5 +1,5 @@
-//NMEC: ...
-//NOME: ...
+//NMEC: 93313
+//NOME: Daniel Andrade
 //
 // Joaquim Madeira, AlgC, April 2020
 // João Manuel Rodrigues, AlgC, May 2020
@@ -12,7 +12,7 @@
 //// PROCURE ... E COMPLETE ////
 
 #include "SortedList.h"
-
+#include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
 
@@ -125,8 +125,25 @@ void ListMove(List* l, int newPos) {
     l->current = l->tail;
   } else {  // move to an inner node
     // Start at head (or current position) and move forward until newPos.
-    //...
-    
+    if(l->current == NULL){
+      l->current = l->head;
+      l->currentPos = 0;
+    }
+
+    if(l->currentPos <= newPos){
+      while(l->currentPos < newPos){
+        (l->currentPos) += 1;
+        l->current = l->current->next;
+      }
+    }
+    else{
+      l->currentPos = 0;
+      l->current = l->head;
+      while(l->currentPos < newPos){
+        (l->currentPos) += 1;
+        l->current = l->current->next;
+      }
+    }
   }
   l->currentPos = newPos;
 }
@@ -140,7 +157,7 @@ void ListMoveToNext(List* l) {
 void ListMoveToPrevious(List* l) {
   ListMove(l, l->currentPos >= 0 ? l->currentPos - 1 : l->size-1);
 }
-  
+
 void ListMoveToHead(List* l) { ListMove(l, 0); }
 
 void ListMoveToTail(List* l) { ListMove(l, l->size - 1); }
@@ -152,8 +169,46 @@ void ListMoveToTail(List* l) { ListMove(l, l->size - 1); }
 // If search fails. return -1 and don't change the current node.
 // (Try to optimize the search to start at the current node if possible.)
 int ListSearch(List* l, const void* p) {
-  //...
-  
+  //save NODE
+  int pos = ListGetCurrentPos(l);
+  struct _ListNode* sn = l->current;
+
+  if(l->compare(l->head->item,p) > 0){
+    return -1;
+  }
+  if(l->compare(l->head->item,p) == 0){
+    l->currentPos = 0;
+    l->current=l->head;
+    return 0;
+  }
+  if(l->compare(l->tail->item,p) < 0){
+    return -1;
+  }
+  if(l->compare(l->tail->item,p)==0){
+    l->currentPos = l->size-1;
+    l->current=l->tail;
+    return 0;
+  }
+
+  while(l->compare(l->current->item, p) < 0){
+    if(ListGetCurrentPos(l) != l->size-2){
+      ListMoveToNext(l);
+    }else{
+      l->currentPos = pos;
+      l->current = sn;
+      return -1;
+    }
+  }
+
+  while(l->compare(l->current->item, p) > 0){
+    if(ListGetCurrentPos(l) != 0){
+      ListMoveToPrevious(l);
+    }else{
+      l->currentPos = pos;
+      l->current = sn;
+      return -1;
+    }
+  }
   return 0;
 }
 
@@ -271,8 +326,12 @@ void* ListRemoveCurrent(List* l) {
   else {
     // find node before current, change its next field,
     // free current, change current, change size
-    //...
-    
+    ListMoveToPrevious(l);
+    struct _ListNode* sn = l->current->next;
+    l->current->next = l->current->next->next;
+    free(sn);
+    ListMoveToNext(l);
+    l->size--;
   }
   return item;
 }
@@ -303,4 +362,3 @@ void ListTestInvariants(const List* l) {
 }
 
 // You may add extra definitions here.
-

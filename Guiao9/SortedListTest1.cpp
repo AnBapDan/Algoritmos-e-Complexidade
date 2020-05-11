@@ -38,7 +38,7 @@ void printList(List* list) {
 
 int main(void) {
   List* list = ListCreate(comparator);
-  
+
   printf("INSERTING\n");
   int r;
   int* aux;
@@ -52,7 +52,7 @@ int main(void) {
 
   r = ListInsert(list, aux);  // Inserting equal element should fail
   assert (r == -1);  // failure
-  
+
   for (int i = 0; i <= 12; i += 2) {
     aux = (int*)malloc(sizeof(int));
     *aux = i;
@@ -65,7 +65,7 @@ int main(void) {
   printList(list);
 
   printf("SEARCHING\n");
-  
+
   for (int i = -6; i <=18; i+=6) {
     ListMove(list, 5);
     NCMP = 0;
@@ -74,7 +74,7 @@ int main(void) {
     printf("Searching for %2d: ret=%2d  currentPos=%2d NCMP=%2d\n",
             i, ret, pos, NCMP);
   }
-  
+
   printf("REMOVING\n");
 
   ListMoveToHead(list);
@@ -94,7 +94,6 @@ int main(void) {
     printList(list);
   }
   ListDestroy(&list);
-  
+
   return 0;
 }
-
