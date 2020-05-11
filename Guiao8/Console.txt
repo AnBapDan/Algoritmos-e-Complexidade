@@ -1,0 +1,90 @@
+1) Create DateTimes---
+
+2) DateTimeCompare---
+dt[i]              	dt[j]              	cmp
+2019-12-30 23:00:00	2019-12-30 14:00:00	+
+2019-12-30 23:00:00	2020-01-01 11:00:00	-
+2019-12-30 23:00:00	2020-02-29 20:00:00	-
+2020-01-01 11:00:00	2019-12-30 14:00:00	+
+2020-01-01 11:00:00	2020-01-01 11:00:00	0
+2020-01-01 11:00:00	2020-02-29 20:00:00	-
+2020-02-29 08:00:00	2019-12-30 14:00:00	+
+2020-02-29 08:00:00	2020-01-01 11:00:00	+
+2020-02-29 08:00:00	2020-02-29 20:00:00	-
+
+3) TimeIntervalCreate---
+ti[i] -> [2019-12-30 14:00:00, 2019-12-30 23:00:00[(0-Passeio Serra)
+ti[i] -> [2019-12-31 09:00:00, 2019-12-31 12:00:00[(1-Compras fim-de-ano)
+ti[i] -> [2019-12-31 12:00:00, 2020-01-01 11:00:00[(2-Rave fim-de-ano)
+ti[i] -> [2019-12-31 09:00:00, 2020-01-01 18:00:00[(3-Férias fim-de-ano)
+ti[i] -> [2020-01-01 11:00:00, 2020-02-29 08:00:00[(4-Estudar AlgC)
+ti[i] -> [2020-02-29 20:00:00, 2020-02-29 20:00:00[(5-Telefonar primo)
+ti[i] -> [2020-02-28 20:00:00, 2020-03-01 08:00:00[(6-Maratona TV)
+
+4) TimeIntervalCompare/Overlaps/Contains---
+ti[i]         	ti[j]         	cmp	ovr	cnt
+0-Passeio Serr	1-Compras fim-	-	0	0
+0-Passeio Serr	3-Férias fim-	-	0	0
+0-Passeio Serr	5-Telefonar pr	-	0	0
+2-Rave fim-de-	1-Compras fim-	+	0	0
+2-Rave fim-de-	3-Férias fim-	0	1	0
+2-Rave fim-de-	5-Telefonar pr	-	0	0
+4-Estudar AlgC	1-Compras fim-	+	0	0
+4-Estudar AlgC	3-Férias fim-	0	1	0
+4-Estudar AlgC	5-Telefonar pr	-	0	0
+6-Maratona TV	1-Compras fim-	+	0	0
+6-Maratona TV	3-Férias fim-	+	0	0
+6-Maratona TV	5-Telefonar pr	0	1	1
+
+5) SchedulingSequenceCreate---
+ss1 != NULL -> 1
+ss1->size -> 0
+ss1->capacity -> 7
+
+6) SchedulingSequenceAdd---
+i -> 1
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 1
+i -> 3
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 6
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 1
+i -> 6
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 2
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 1
+i -> 0
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 1
+i -> 2
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 0
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 0
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 4
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 2
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 5
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+i -> 2
+suc = SchedulingSequenceAdd(ss1, ti[i]) -> 0
+
+7) SchedulingSequenceGet---
+idx -> 0
+SchedulingSequenceGet(ss1, idx) -> [2019-12-31 09:00:00, 2019-12-31 12:00:00[(1-Compras fim-de-ano)
+idx -> 1
+SchedulingSequenceGet(ss1, idx) -> [2020-02-28 20:00:00, 2020-03-01 08:00:00[(6-Maratona TV)
+idx -> 2
+SchedulingSequenceGet(ss1, idx) -> [2019-12-31 12:00:00, 2020-01-01 11:00:00[(2-Rave fim-de-ano)
+idx -> 3
+SchedulingSequenceGet(ss1, idx) -> [2019-12-30 14:00:00, 2019-12-30 23:00:00[(0-Passeio Serra)
+
+8) SchedulingSequencePop---
+idx -> 0
+SchedulingSequencePop(ss1, idx) -> [2019-12-31 09:00:00, 2019-12-31 12:00:00[(1-Compras fim-de-ano)
+idx -> 0
+SchedulingSequencePop(ss1, idx) -> [2020-02-28 20:00:00, 2020-03-01 08:00:00[(6-Maratona TV)
+idx -> 1
+SchedulingSequencePop(ss1, idx) -> [2020-02-28 20:00:00, 2020-03-01 08:00:00[(6-Maratona TV)
+idx -> 0
+SchedulingSequencePop(ss1, idx) -> [2020-02-28 20:00:00, 2020-03-01 08:00:00[(6-Maratona TV)
