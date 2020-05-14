@@ -172,19 +172,20 @@ int ListSearch(List* l, const void* p) {
   //save NODE
   int pos = ListGetCurrentPos(l);
   struct _ListNode* sn = l->current;
-
-  if(l->compare(l->head->item,p) > 0){
+  int rcompareh = l->compare(l->head->item,p);
+  if(rcompareh > 0){
     return -1;
   }
-  if(l->compare(l->head->item,p) == 0){
+  if(rcompareh == 0){
     l->currentPos = 0;
     l->current=l->head;
     return 0;
   }
-  if(l->compare(l->tail->item,p) < 0){
+  int rcomparet = l->compare(l->tail->item,p);
+  if(rcomparet < 0){
     return -1;
   }
-  if(l->compare(l->tail->item,p)==0){
+  if(rcomparet == 0){
     l->currentPos = l->size-1;
     l->current=l->tail;
     return 0;
