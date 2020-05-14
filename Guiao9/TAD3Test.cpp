@@ -9,7 +9,7 @@
 //ARGS 2
 //ARGS 3
 //ARGS 4
-//ARGS 5 
+//ARGS 5
 //ARGS 6
 //ARGS 7
 //ARGS 8
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
   dt[7] = DateTimeCreate(2020,  2, 29,  8, 0, 0);
   dt[8] = DateTimeCreate(2020,  2, 29, 20, 0, 0);
   dt[9] = DateTimeCreate(2020,  3,  1,  8, 0, 0);
-  
+
   if (++test > lasttest) return 0;
   printf("\n%d) DateTimeCompare---\n", test);
   printf("%-19s\t%-19s\t%s\n", "dt[i]", "dt[j]", "cmp");
@@ -96,11 +96,11 @@ int main(int argc, char* argv[]) {
   ti[4] = TimeIntervalCreate(dt[4], dt[7], "4-Estudar AlgC");
   ti[5] = TimeIntervalCreate(dt[8], dt[8], "5-Telefonar primo");
   ti[6] = TimeIntervalCreate(dt[6], dt[9], "6-Maratona TV");
-  
+
   for (int i = 0; i < NTI; i++) {
     SHOWTI(ti[i]);
   }
-  
+
   if (++test > lasttest) return 0;
   printf("\n%d) TimeIntervalCompare/Overlaps/Contains---\n", test);
   printf("%-14s\t%-14s\t%s\t%s\t%s\n", "ti[i]", "ti[j]", "cmp", "ovr", "cnt");
@@ -113,15 +113,15 @@ int main(int argc, char* argv[]) {
               ti[i]->id, ti[j]->id, signchr(cmp), ovr, cnt);
     }
   }
-  
+
   if (++test > lasttest) return 0;
   srandom(lasttest);
   printf("\n%d) SchedulingSequenceCreate---\n", test);
   SchedulingSequence *ss1 = SchedulingSequenceCreate(NTI);
   SHOWint( ss1 != NULL );
   SHOWint( ss1->size );
-  int( ss1->capacity );
-  
+//  int( ss1->capacity );
+
   if (++test > lasttest) return 0;
   printf("\n%d) SchedulingSequenceAdd---\n", test);
   int suc = 0;  // return status of Add
@@ -132,14 +132,14 @@ int main(int argc, char* argv[]) {
     SHOWint( suc = SchedulingSequenceAdd(ss1, ti[i]) );
     bal += (2*suc-1); // +1 for success -1 for failure
   }
-  
+
   if (++test > lasttest) return 0;
   printf("\n%d) SchedulingSequenceGet---\n", test);
   for (int idx = 0; idx < ss1->size; idx++) {
     SHOWint( idx );
     SHOWTI( SchedulingSequenceGet(ss1, idx) );
   }
-  
+
   if (++test > lasttest) return 0;
   printf("\n%d) SchedulingSequencePop---\n", test);
   while (!SchedulingSequenceIsEmpty(ss1)) {
@@ -147,9 +147,9 @@ int main(int argc, char* argv[]) {
     SHOWint( idx );
     SHOWTI( SchedulingSequencePop(ss1, idx) );
   }
-  
+
   SchedulingSequenceDestroy(&ss1);
-  
+
   // Free everything
   // (If you comment out any of these, valgrind should detect it!)
   for (int i = 0; i < NTI; i++) {
@@ -158,7 +158,6 @@ int main(int argc, char* argv[]) {
   for (int i = 0; i < NDT; i++) {
     DateTimeDestroy(&(dt[i]));
   }
-  
+
   return 0;
 }
-

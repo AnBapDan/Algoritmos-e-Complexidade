@@ -173,6 +173,7 @@ int ListSearch(List* l, const void* p) {
   int pos = ListGetCurrentPos(l);
   struct _ListNode* sn = l->current;
   int rcompareh = l->compare(l->head->item,p);
+
   if(rcompareh > 0){
     return -1;
   }
